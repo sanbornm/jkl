@@ -151,7 +151,7 @@ func replaceExt(fn, ext string) string {
 
 // Removes index.html from URLs
 func prettyUrl(fn string) string {
-    return strings.TrimSuffix(fn, "index.html")
+	return strings.TrimSuffix(fn, "index.html")
 }
 
 // sniff will extract the first N bytes from a file and return the results.

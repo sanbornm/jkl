@@ -5,12 +5,11 @@ import (
 )
 
 func TestUrlEncode(t *testing.T) {
-    in := "This is a string"
-    result := urlEncode(in)
-    expected := "This+is+a+string"
+	in := "This is a string"
+	result := urlEncode(in)
+	expected := "This+is+a+string"
 
-    if (result != expected) {
-        t.Errorf("Expected [%v] got [%v]", expected, result)
-    }
+	if result != expected {
+		t.Errorf("Expected [%v] got [%v]", expected, result)
+	}
 }
-

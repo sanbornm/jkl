@@ -255,9 +255,9 @@ func (s *Site) writePages() error {
 		} else {
 			layout = appendExt(layout, ".html")
 			err := s.templ.ExecuteTemplate(&buf, layout, data)
-            if err != nil {
-                fmt.Println(err)
-            }
+			if err != nil {
+				fmt.Println(err)
+			}
 		}
 
 		logf(MsgGenerateFile, url)

@@ -21,7 +21,7 @@ func ParsePost(fn string) (Page, error) {
 	}
 
 	// parse the Date and Title from the post's file name
-	_,f := filepath.Split(fn)
+	_, f := filepath.Split(fn)
 	t, d, err := parsePostName(f)
 	if err != nil {
 		return nil, err
@@ -43,7 +43,7 @@ func ParsePost(fn string) (Page, error) {
 	//post["url"]= filepath.Join(year, mon, day, name[11:])
 	post["url"] = filepath.Join(post.GetCategories()[0], post.GetString("slug"), "index.html")
 	post["pretty_url"] = prettyUrl(filepath.Join(post.GetCategories()[0], post.GetString("slug"), "index.html"))
-    post["short_description"] = post.GetShortDescription()
+	post["short_description"] = post.GetShortDescription()
 
 	return post, nil
 }
