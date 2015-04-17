@@ -1,7 +1,7 @@
 **jkl** is a static site generator written in [Go](http://www.golang.org),
 based on [Jekyll](https://github.com/mojombo/jekyll)
 
-[![Build Status](https://drone.io/github.com/sanbornm/jkl/status.png)](https://drone.io/drone/jkl/latest)
+[![Build Status](https://drone.io/github.com/sanbornm/jkl/status.png)](https://drone.io/github.com/sanbornm/jkl)
 
 **This is a fork of [jkl](https://github.com/drone/jkl)** as the original is no longer maintained.
 
