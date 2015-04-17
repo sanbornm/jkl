@@ -27,10 +27,6 @@ Notable differences between jkl and Jekyll:
 * Only supports YAML front matter in markup files
 * No plugin support
 
-Additional features:
-
-* Deploy to S3
-
 Sites built with jkl:
 
 * ~~Drone.io Blog: http://blog.drone.io~~ (now moved to Hugo)
