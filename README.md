@@ -1,7 +1,18 @@
 **jkl** is a static site generator written in [Go](http://www.golang.org),
 based on [Jekyll](https://github.com/mojombo/jekyll)
 
-[![Build Status](https://drone.io/drone/jkl/status.png)](https://drone.io/drone/jkl/latest)
+[![Build Status](https://drone.io/github.com/sanbornm/jkl/status.png)](https://drone.io/drone/jkl/latest)
+
+**This is a fork of [jkl](https://github.com/drone/jkl)** as the original is no longer maintained.
+
+Notable changes in this fork:
+
+* No support for AWS S3 syncing (do one thing and one thing well) use s3cmd or some other tool instead.
+* Support for pretty urls
+* Short descriptions with the &lt;!--more-&gt; tag
+* Fix: display of dates
+* Added urlencode template filter
+
 
 Notable similarities between jkl and Jekyll:
 
@@ -22,8 +33,8 @@ Additional features:
 
 Sites built with jkl:
 
-* Drone.io Blog: http://blog.drone.io
-* Drone.io Documentation: http://docs.drone.io
+* ~~Drone.io Blog: http://blog.drone.io~~ (now moved to Hugo)
+* ~~Drone.io Documentation: http://docs.drone.io~~ (now moved to Hugo)
 
 --------------------------------------------------------------------------------
 
@@ -35,8 +46,6 @@ the following dependencies:
 ```
 go get github.com/russross/blackfriday
 go get launchpad.net/goyaml
-go get launchpad.net/goamz/aws
-go get launchpad.net/goamz/s3
 go get github.com/howeyc/fsnotify
 ```
 Once you have compiled `jkl` you can install with the following command:
@@ -47,11 +56,6 @@ sudo install -t /usr/local/bin jkl
 
 If you are running x64 linux you can download and install the pre-compiled
 binary:
-
-```sh
-wget https://github.com/downloads/bradrydzewski/jkl/jkl
-sudo install -t /usr/local/bin jkl
-```
 
 ### Usage
 
@@ -64,7 +68,6 @@ Usage: jkl [OPTION]... [SOURCE]
       --destination    changes the dir where Jekyll will write files to
       --server         starts a server that will host your _site directory
       --server-port    changes the port that the Jekyll server will run on
-      --s3             copies the _site directory to s3
   -v, --verbose        runs Jekyll with verbose output
   -h, --help           display this help and exit
 
@@ -80,23 +83,8 @@ Examples:
 If you are running the website in server mode, with the `--server` flag, you can
 also instruct `jkl` to auto-recompile you website by adding the `--auto` flag.
 
-NOTE: this feature is only available on Linux
+NOTE: this feature is only available on Linux and OSX
 
 ### Deployment
 
-In order to deploy to S3 you must include a `_jekyll_s3.yml` file in your
-site's root directory that specifies your AWS key, secret and bucket:
-
-```
-s3_id: YOUR_AWS_S3_ACCESS_KEY_ID
-s3_secret: YOUR_AWS_S3_SECRET_ACCESS_KEY
-s3_bucket: your.blog.bucket.com
-```
-
-Run `jkl --s3`
-
-### Documentation
-
-See the official [Jekyll wiki](https://github.com/mojombo/jekyll/wiki)
-... just remember that you are using Go templates instead of Liquid templates.
-
+Use rsync or s3cmd to sync files to remote server.
