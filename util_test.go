@@ -112,3 +112,9 @@ func TestReplaceExt(t *testing.T) {
 			t.Errorf("Expected replaced extension [/test.html] got [%s]", ext)
 	}
 }
+
+func TestPrettyUrl(t *testing.T) {
+	if path := prettyUrl("/test/index.html"); path != "/test/" {
+        t.Errorf("Expected replaced path [/test/index.html] got [%s]", path)
+	}
+}

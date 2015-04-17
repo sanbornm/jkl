@@ -59,6 +59,8 @@ func parsePage(fn string, c []byte) (Page, error) {
 		page["layout"] = "default"
 	}
 
+    page["short_description"] = page.GetShortDescription()
+
 	// according to spec, Jekyll allows user to enter either category or
 	// categories. Convert single category to string array to be consistent ...
 	if category := page.GetString("category"); category != "" {
@@ -184,6 +186,17 @@ func (p Page) GetContent() (c string) {
 		c = v.(string)
 	}
 	return
+}
+
+// Gets short description of post
+// i.e. text until hitting <!-more->
+func (p Page) GetShortDescription() string {
+    index := strings.Index(p.GetContent(), "<!--more-->")
+    if index < 0 {
+        return p.GetContent()
+    }
+
+    return p.GetContent()[:index]
 }
 
 // Gets the list of tags to which this Post belongs.

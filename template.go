@@ -3,6 +3,7 @@ package main
 import (
 	"strings"
 	"time"
+    "net/url"
 )
 
 // Additional functions available in Jekyll templates
@@ -23,6 +24,7 @@ var funcMap = map[string]interface{} {
 	"truncate"          : truncate,
 	"truncatewords"     : truncateWords,
 	"upcase"            : upper,
+	"url_encode"        : urlEncode,
 }
 
 // Capitalize words in the input sentence
@@ -37,7 +39,7 @@ func eq(v1 interface{}, v2 interface{}) bool {
 
 // Converts a date to a string
 func dateToString(date time.Time) string { 
-	return date.Format("2006-01-02")
+	return date.Format("Jan 2, 2006")
 }
 
 // Converts a date to a string
@@ -101,4 +103,8 @@ func truncateWords(s string, x int) (string) {
 // Convert an input string to uppercase
 func upper(s string) string {
 	return strings.ToUpper(s)
+}
+
+func urlEncode(s string) string {
+    return url.QueryEscape(s)
 }

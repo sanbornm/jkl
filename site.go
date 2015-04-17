@@ -4,9 +4,6 @@ import (
 	"bytes"
 	"fmt"
 	"io/ioutil"
-	"launchpad.net/goamz/aws"
-	"launchpad.net/goamz/s3"
-	"mime"
 	"os"
 	"path/filepath"
 	"text/template"
@@ -96,40 +93,6 @@ func (s *Site) Generate() error {
 	}
 
 	return nil
-}
-
-// Deploys a site to S3.
-func (s *Site) Deploy(user, pass, url string) error {
-
-	auth := aws.Auth{AccessKey: user, SecretKey: pass}
-	b := s3.New(auth, aws.USEast).Bucket(url)
-
-	// walks _site directory and uploads file to S3
-	walker := func(fn string, fi os.FileInfo, err error) error {
-		if fi.IsDir() {
-			return nil
-		}
-
-		rel, _ := filepath.Rel(s.Dest, fn)
-		typ := mime.TypeByExtension(filepath.Ext(rel))
-		content, err := ioutil.ReadFile(fn)
-		logf(MsgUploadFile, rel)
-		if err != nil {
-			return err
-		}
-
-		// try to upload the file ... sometimes this fails due to amazon
-		// issues. If so, we'll re-try
-		if err := b.Put(rel, content, typ, s3.PublicRead); err != nil {
-			time.Sleep(100 * time.Millisecond) // sleep so that we don't immediately retry
-			return b.Put(rel, content, typ, s3.PublicRead)
-		}
-
-		// file upload was a success, return nil
-		return nil
-	}
-
-	return filepath.Walk(s.Dest, walker)
 }
 
 // Helper function to traverse the source directory and identify all posts,
@@ -276,6 +239,7 @@ func (s *Site) writePages() error {
 
 		// add document body to the map
 		data["content"] = content
+		data["short_description"] = page.GetShortDescription()
 
 		// write the template to a buffer
 		// NOTE: if template is nil or empty, then we should parse the
@@ -290,7 +254,10 @@ func (s *Site) writePages() error {
 			buf.WriteString(content)
 		} else {
 			layout = appendExt(layout, ".html")
-			s.templ.ExecuteTemplate(&buf, layout, data)
+			err := s.templ.ExecuteTemplate(&buf, layout, data)
+            if err != nil {
+                fmt.Println(err)
+            }
 		}
 
 		logf(MsgGenerateFile, url)

@@ -38,9 +38,12 @@ func ParsePost(fn string) (Page, error) {
 	mon := fmt.Sprintf("%02d", d.Month())
 	day := fmt.Sprintf("%02d", d.Day())
 	year := fmt.Sprintf("%02d", d.Year())
-	name := replaceExt(f, ".html")
+	//name := replaceExt(f, ".html")
 	post["id"] = filepath.Join(year, mon, day, f) // TODO try to remember why I need this field
-	post["url"]= filepath.Join(year, mon, day, name[11:])
+	//post["url"]= filepath.Join(year, mon, day, name[11:])
+	post["url"] = filepath.Join(post.GetCategories()[0], post.GetString("slug"), "index.html")
+	post["pretty_url"] = prettyUrl(filepath.Join(post.GetCategories()[0], post.GetString("slug"), "index.html"))
+    post["short_description"] = post.GetShortDescription()
 
 	return post, nil
 }

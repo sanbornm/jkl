@@ -96,30 +96,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Deploys the static website to S3
-	if *deploy {
-
-		var conf *DeployConfig
-		// Read the S3 configuration details if not provided as
-		// command line
-		if *s3key == "" {
-			path := filepath.Join(site.Src, "_jekyll_s3.yml")
-			conf, err = ParseDeployConfig(path)
-			if err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-		} else {
-			// else use the command line args
-			conf = &DeployConfig{*s3key, *s3secret, *s3bucket}
-		}
-
-		if err := site.Deploy(conf.Key, conf.Secret, conf.Bucket); err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-	}
-
 	// If the auto option is enabled, use fsnotify to watch
 	// and re-generate the site if files change.
 	if *auto {
@@ -233,7 +209,5 @@ Examples:
   jkl                 generates site from current working directory
   jkl --server        generates site and serves at localhost:4000
   jkl /path/to/site   generates site from source dir /path/to/site
-
-Report bugs to <https://github.com/bradrydzewski/jkl/issues>
-Jekyll home page: <https://github.com/bradrydzewski/jkl>`)
+`)
 }
