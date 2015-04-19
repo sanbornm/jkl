@@ -28,20 +28,8 @@ var (
 	// re-generates the site when files are modified.
 	auto = flag.Bool("auto", false, "")
 
-	// deploys the website to S3
-	deploy = flag.Bool("s3", false, "")
-
 	// serves the website from the specified base url
 	baseurl = flag.String("base-url", "", "")
-
-	// s3 access key
-	s3key = flag.String("s3_key", "", "")
-
-	// s3 secret key
-	s3secret = flag.String("s3_secret", "", "")
-
-	// s3 bucket name
-	s3bucket = flag.String("s3_bucket", "", "")
 
 	// runs Jekyll with verbose output if True
 	verbose = flag.Bool("verbose", false, "")
@@ -198,10 +186,6 @@ var usage = func() {
       --destination    changes the dir where Jekyll will write files to
       --server         starts a server that will host your _site directory
       --server-port    changes the port that the Jekyll server will run on
-      --s3             copies the _site directory to s3
-      --s3_key         aws access key use for s3 authentication
-      --s3_secret      aws secret key use for s3 authentication
-      --s3_bucket      name of the s3 bucket
   -v, --verbose        runs Jekyll with verbose output
   -h, --help           display this help and exit
 
