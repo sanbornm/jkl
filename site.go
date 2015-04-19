@@ -167,6 +167,7 @@ func (s *Site) read() error {
 
 	// Add the posts, timestamp, etc to the Site Params
 	s.Conf.Set("posts", s.posts)
+	s.Conf.Set("pages", s.pages)
 	s.Conf.Set("time", time.Now())
 	s.calculateTags()
 	s.calculateCategories()
